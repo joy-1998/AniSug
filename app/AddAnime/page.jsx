@@ -32,7 +32,7 @@ const modalStyle = {
   p: 4,
 };
 
-export default function home() {
+export default function AddAnime() {
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -79,7 +79,7 @@ export default function home() {
       'Content-Type': 'application/json'
     }
 
-    const response = await axios.put('http://localhost:8081/v1/api/insertRecords', objToAdd, {
+    const response = await axios.put('http://40.81.248.44:8081/v1/api/insertRecords', objToAdd, {
       headers: headers
     });
     if(response.status === 200) {

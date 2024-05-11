@@ -44,7 +44,7 @@ const modalStyle = {
   p: 4,
 };
 
-export default function home() {
+export default function Home() {
   const [animeGenre, setAnimeGenre] = useState("");
   const [response, setResponse] = useState(null);
   const [criticsResponse, setCriticResponse] = useState([]);
@@ -81,7 +81,7 @@ export default function home() {
       console.log(currentTitle);
 
       const res = await axios.post(
-        "http://localhost:8080/v1/api/getCriticsReviews",
+        "http://40.81.248.44:8080/v1/api/getCriticsReviews",
         revToSearch,
         {
           headers: headers,
@@ -125,7 +125,7 @@ export default function home() {
       objToSearch.tags = animeGenre.split(",");
 
       const res = await axios.post(
-        "http://localhost:8082/v1/api/searchByGenre",
+        "http://40.81.248.44:8082/v1/api/searchByGenre",
         objToSearch,
         {
           headers: headers,

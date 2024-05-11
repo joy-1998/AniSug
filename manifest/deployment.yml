@@ -1,0 +1,129 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: anisug-deployment
+  labels:
+    app: anisug
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: anisug
+      ss: anisug-assignment
+  template:
+    metadata:
+      labels:
+        app: anisug
+        ss: anisug-assignment
+    spec:
+      containers:
+        - name: anisug
+          image: ssanisug.azurecr.io/ssanisug/anisug:v3
+          ports:
+            - containerPort: 3000
+
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mutations-deployment
+  labels:
+    app: mutations
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mutations
+      ss: anisug-assignment
+  template:
+    metadata:
+      labels:
+        app: mutations
+        ss: anisug-assignment
+    spec:
+      containers:
+        - name: mutations
+          image: ssanisug.azurecr.io/ssanisug/ss-mutations:v3
+          ports:
+            - containerPort: 8081
+
+
+---
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: critics-deployment
+  labels:
+    app: critics
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: critics
+      ss: anisug-assignment
+  template:
+    metadata:
+      labels:
+        app: critics
+        ss: anisug-assignment
+    spec:
+      containers:
+        - name: critics
+          image: ssanisug.azurecr.io/ssanisug/ss-critics:v3
+          ports:
+            - containerPort: 8080
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: search-deployment
+  labels:
+    app: search
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: search
+      ss: anisug-assignment
+  template:
+    metadata:
+      labels:
+        app: search
+        ss: anisug-assignment
+    spec:
+      containers:
+        - name: search
+          image: ssanisug.azurecr.io/ssanisug/ss-search:v3
+          ports:
+            - containerPort: 8082
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: anisug-controller
+spec:
+  type: LoadBalancer
+  loadBalancerIP: 40.81.248.44
+  ports:
+    - name: anisug-ui
+      port: 3000
+    - name: critics-service
+      port: 8080
+    - name: search-service
+      port: 8082
+    - name: mutations-service
+      port: 8081
+  selector:
+    ss: anisug-assignment
+
+---
+
+
